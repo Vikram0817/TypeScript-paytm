@@ -46,7 +46,7 @@ user.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (error) {
-        res.json("Unable to create account. Try again!");
+        res.json({ msg: "User already exists Or some erroe occured!" });
     }
 }));
 user.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,7 +67,7 @@ user.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (error) {
-        res.json("Unable to create account. Try again!");
+        res.json({ msg: "Unable to login. Try again!" });
     }
 }));
 user.put("/", middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {

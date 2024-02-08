@@ -5,8 +5,7 @@ import Signin from './pages/Signin'
 import Dashboard from './pages/Dashbord'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <BrowserRouter>
       <Routes>

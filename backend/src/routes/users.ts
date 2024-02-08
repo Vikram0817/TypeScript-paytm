@@ -35,7 +35,7 @@ user.post("/signup", async (req, res) => {
             return res.json({msg: `HTTP error! status: ${res.status}`})
         }   
     } catch (error) {
-        res.json("Unable to create account. Try again!")
+        res.json({msg: "User already exists Or some erroe occured!"})
     }
 })
 
@@ -55,7 +55,7 @@ user.post("/signin", async (req, res) => {
             return res.json({msg: `HTTP error! status: ${res.status}`})
         }  
     } catch (error) {
-        res.json("Unable to create account. Try again!")
+        res.json({msg: "Unable to login. Try again!"})
     }
 })
 

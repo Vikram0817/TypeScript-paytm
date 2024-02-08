@@ -1,15 +1,17 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 interface Props {
     label: string; 
     className: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input: React.FC<Props> = ({ label, className }) => {
+const Input: React.FC<Props> = ({value, onChange, label, className }) => {
     return (
         <>
             <label htmlFor={label}>{label}</label>
-            <input className={className}></input>
+            <input value={value} onChange={onChange} className={className}></input>
         </>
     );
 }
