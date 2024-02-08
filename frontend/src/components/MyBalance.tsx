@@ -8,8 +8,8 @@ export default function MyBalance(){
     const [balance, setBalance] = useRecoilState(balanceState);
 
     const headers = {
-        'Content-Type': 'application/json', // Example header
-        'Authorization': `Bearer ${localStorage.getItem("myToken")}` // Example header for authorization
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem("myToken")}`
     };
 
     useEffect(() => {

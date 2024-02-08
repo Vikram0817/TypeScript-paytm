@@ -88,7 +88,7 @@ user.put("/", middleware, async (req, res) => {
     }
 });
 
-user.get("/", async (req, res) => {
+user.get("/", middleware, async (req, res) => {
     try {
         const { filter } = req.query;
         const filterString = filter as string;

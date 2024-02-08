@@ -14,8 +14,15 @@ export default function FindUser(){
     const [filter, setFilter] = useState("");
     const [users, setUsers] = useState<User[]>([]);
 
+    const headers = {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem("myToken")}`
+    };
+
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/v1/user/?filter=${filter}`)
+        axios.get(`http://localhost:3000/api/v1/user/?filter=${filter}`,{
+        headers: headers
+        })
         .then(res => res.data)
         .then(data => {
             if(data){
@@ -47,7 +54,7 @@ export default function FindUser(){
                     <button type="button" className="text-white absolute end-2.5 bottom-2.5 bg-black hover:bg-teal-500 rounded-3xl text-sm px-4 py-2 dark:bg-teal-500 dark:hover:bg-teal-700 dark:focus:ring-teal-700">Search</button>
                 </div>
             </form>
-            {users.length > 0 ? users.map((user, idx) => <UserCard key={idx} fullName={`${user.firstName} ${user.lastName}`} id={user.id} username={user.username}/>) : <p className="mt-2">No user found...</p>}
+            {users.length > 0 ? users.map((user, idx) => <UserCard key={idx} fullName={`${user.firstName} ${user.lastName}`} username={user.username}/>) : <p className="mt-2">No user found...</p>}
         </div>
     )
 }

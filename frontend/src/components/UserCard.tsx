@@ -5,10 +5,9 @@ import { tranferToUserState } from "../store";
 interface props{
     username: string;
     fullName: string;
-    id: number;
 }
 
-export default function UserCard({username, fullName, id}: props){
+export default function UserCard({username, fullName}: props){
 
     const navigate = useNavigate();
     const setTransferToUser = useSetRecoilState(tranferToUserState)

@@ -49,6 +49,14 @@ account.post("/transfer", middleware, async (req, res) => {
                 userId: fromUserId
             }
         })
+        
+        if (fromAcc && fromAcc.balance < amount) {
+            return res.json({ msg: "Insufficient balance for the transfer." });
+        }
+        
+        if (fromAcc?.id === toAcc?.id){
+            return res.json({msg: "Can not transfer to yourself!"})
+        }
 
         const result = await prisma.$transaction([
             prisma.account.update({

@@ -96,7 +96,7 @@ user.put("/", middleware_1.default, (req, res) => __awaiter(void 0, void 0, void
         res.status(500).json({ error: "An error occurred while updating the user." });
     }
 }));
-user.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+user.get("/", middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { filter } = req.query;
         const filterString = filter;
