@@ -26,55 +26,54 @@ account.get("/balance", middleware, async (req, res) => {
 
 account.post("/transfer", middleware, async (req, res) => {
     try {
-        const { userId: fromUserId, toUserId, amount } = req.body;
+        const { userId: fromUserId, toUsername, amount } = req.body;
 
-        const [fromAcc, toAcc] = await prisma.$transaction([
-            prisma.account.findFirst({
+        const toUser = await prisma.user.findFirst({
+            where: {
+                username: toUsername
+            }
+        })
+
+        if (!toUser) {
+            return res.status(404).json({ msg: "Recipient user not found." });
+        }
+
+        const toAcc = await prisma.account.findFirst({
+            where: {
+                userId: toUser?.id
+            }
+        })
+
+        const fromAcc = await prisma.account.findFirst({
+            where: {
+                userId: fromUserId
+            }
+        })
+
+        const result = await prisma.$transaction([
+            prisma.account.update({
                 where: {
-                    userId: fromUserId
+                    id: fromAcc?.id
+                },
+                data: {
+                    balance: {
+                        decrement: amount
+                    }
                 }
             }),
-            prisma.account.findFirst({
+            prisma.account.update({
                 where: {
-                    userId: toUserId
+                    id: toAcc?.id
+                },
+                data: {
+                    balance: {
+                        increment: amount
+                    }
                 }
             })
         ])
-
-        if (!fromAcc || !toAcc) {
-            return res.status(404).json({ msg: "One or both accounts not found." });
-        }
-
-        // Check if the source account has sufficient balance
-        if (fromAcc.balance < amount) {
-            return res.status(400).json({ msg: "Insufficient balance for transfer." });
-        }
-
-        // Perform the transfer: subtract amount from the source account and add to the destination account
-        await prisma.$transaction([
-            prisma.account.update({
-                where: {
-                    id: fromAcc.id
-                },
-                data: {
-                    balance: {
-                        decrement: amount // Subtract amount from balance
-                    }
-                }
-            }),
-            prisma.account.update({
-                where: {
-                    id: toAcc.id
-                },
-                data: {
-                    balance: {
-                        increment: amount // Add amount to balance
-                    }
-                }
-            })
-        ]);
-
-        return res.json({ msg: `${amount} transferred successfully.` });
+        
+        return res.json({ msg: `₹${amount} transferred successfully.` });
     } catch (error) {
         res.status(500).json({msg: "Transaction failed! Try again after sometime."})
     }
