@@ -19,3 +19,14 @@ export const passwordState = atom({
     key: 'passwordState',
     default: '',
 });
+
+export const balanceState = atom({
+    key: "balanceState",
+    default: Number("")
+})
+
+
+export const tranferToUserState = atom({
+    key: "transferToState",
+    default: ""
+})

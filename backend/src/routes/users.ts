@@ -50,7 +50,7 @@ user.post("/signin", async (req, res) => {
         })
         if(result){
             const token = jwt.sign({ userId: result.id }, JWT_SECRET);
-            return res.json({msg: "Logged in successfully!", token})
+            return res.json({msg: "Logged in successfully!", token, firstName: result.firstName, lastName: result.lastName})
         }else{
             return res.json({msg: `HTTP error! status: ${res.status}`})
         }  
@@ -127,6 +127,11 @@ user.get("/", async (req, res) => {
                         ]
                     }
                 ]
+            },
+            select: {
+                username: true,
+                firstName: true,
+                lastName: true
             }
         });
 

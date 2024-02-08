@@ -1,15 +1,17 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import BottomNavigator from "../components/BottomNavigator";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Input from "../components/Input";
-import { passwordState, usernameState } from "../store";
+import { firstNameState, lastNameState, passwordState, usernameState } from "../store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Signin(){
 
     const [username, setUsername] = useRecoilState(usernameState);
+    const setFirstName = useSetRecoilState(firstNameState);
+    const setLastName = useSetRecoilState(lastNameState);
     const [password, setPassword] = useRecoilState(passwordState);
 
     const navigate = useNavigate();
@@ -21,6 +23,8 @@ export default function Signin(){
         if(data.token){
             alert(`${data.msg}`);
             localStorage.setItem("myToken", data.token)
+            setFirstName(data.firstName);
+            setLastName(data.lastName);
             navigate("/dashboard");
         }else{
             alert(data.msg);

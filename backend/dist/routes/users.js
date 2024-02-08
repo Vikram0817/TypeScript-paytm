@@ -60,7 +60,7 @@ user.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
         if (result) {
             const token = jsonwebtoken_1.default.sign({ userId: result.id }, config_1.JWT_SECRET);
-            return res.json({ msg: "Logged in successfully!", token });
+            return res.json({ msg: "Logged in successfully!", token, firstName: result.firstName, lastName: result.lastName });
         }
         else {
             return res.json({ msg: `HTTP error! status: ${res.status}` });
@@ -134,6 +134,11 @@ user.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         ]
                     }
                 ]
+            },
+            select: {
+                username: true,
+                firstName: true,
+                lastName: true
             }
         });
         if (result.length > 0) {
