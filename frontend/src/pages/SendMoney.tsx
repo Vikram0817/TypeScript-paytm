@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { tranferToUserState } from "../store";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SendMoney() {
 
     const [amount, setAmount] = useState("");
     const toUser = useRecoilValue(tranferToUserState);
     
+    const navigate = useNavigate();
+
     const headers = {
         'Content-Type': 'application/json',
         'authorization': `Bearer ${localStorage.getItem("myToken")}`
@@ -23,7 +26,10 @@ export default function SendMoney() {
             headers: headers
         })        
         .then(res => res.data)
-        .then(data => alert(data.msg))
+        .then(data => {
+            alert(data.msg);
+            navigate("/dashboard")
+        })
     }
 
     return (

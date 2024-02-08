@@ -28,6 +28,10 @@ account.post("/transfer", middleware, async (req, res) => {
     try {
         const { userId: fromUserId, toUsername, amount } = req.body;
 
+        if(amount >= 0){
+            return res.json({msg: "Amount can not be less then or equal to 0"})
+        }
+
         const toUser = await prisma.user.findFirst({
             where: {
                 username: toUsername
