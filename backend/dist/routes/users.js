@@ -63,7 +63,7 @@ user.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* (
             return res.json({ msg: "Logged in successfully!", token, firstName: result.firstName, lastName: result.lastName });
         }
         else {
-            return res.json({ msg: `HTTP error! status: ${res.status}` });
+            return res.json({ msg: `User not found!` });
         }
     }
     catch (error) {

@@ -52,7 +52,7 @@ user.post("/signin", async (req, res) => {
             const token = jwt.sign({ userId: result.id }, JWT_SECRET);
             return res.json({msg: "Logged in successfully!", token, firstName: result.firstName, lastName: result.lastName})
         }else{
-            return res.json({msg: `HTTP error! status: ${res.status}`})
+            return res.json({msg: `User not found!`})
         }  
     } catch (error) {
         res.json({msg: "Unable to login. Try again!"})

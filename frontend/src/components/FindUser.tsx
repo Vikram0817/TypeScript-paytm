@@ -64,6 +64,7 @@ export default function FindUser(){
         .then(data => {
             if(data){
                 setUsers(data);
+                
             }else {
                 setUsers([]);
             }

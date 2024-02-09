@@ -6,6 +6,8 @@ import Input from "../components/Input";
 import { firstNameState, lastNameState, passwordState, usernameState } from "../store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loaders";
+import { useState } from "react";
 
 export default function Signup(){
     const [username, setUsername] = useRecoilState(usernameState);
@@ -13,9 +15,14 @@ export default function Signup(){
     const [lastName, setLastName] = useRecoilState(lastNameState);
     const [password, setPassword] = useRecoilState(passwordState);
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     async function handleSubmit(){
+        
+        setLoading(true);
+
         const res = await axios.post("http://localhost:3000/api/v1/user/signup", {username, firstName, lastName, password})
         const data = res.data;
 
@@ -26,6 +33,8 @@ export default function Signup(){
         }else{
             alert(data.msg);
         }
+
+        setLoading(false);
     }
 
     return (
@@ -44,6 +53,9 @@ export default function Signup(){
                 <Button className="border-black border-2 rounded-xl bg-black text-white w-1/2 m-auto mt-2 hover:bg-teal-400" label="Sign-up" onClick={handleSubmit}></Button>
                 <BottomNavigator line="Already have an account?" page="/signin" className="underline hover:text-teal-400 cursor-pointer" label="Sign-In"></BottomNavigator>
             </div>
+            {loading && <div className="absolute w-full h-full flex flex-col items-center justify-center bg-gray-200 opacity-75">
+            <Loader></Loader>
+            <p className="mt-2 font-medium">Processing transaction</p></div>}
         </div>
     )
 }

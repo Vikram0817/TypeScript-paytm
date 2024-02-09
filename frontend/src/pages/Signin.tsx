@@ -6,6 +6,8 @@ import Input from "../components/Input";
 import { firstNameState, lastNameState, passwordState, usernameState } from "../store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Loader from "../components/Loaders";
 
 export default function Signin(){
 
@@ -14,9 +16,12 @@ export default function Signin(){
     const setLastName = useSetRecoilState(lastNameState);
     const [password, setPassword] = useRecoilState(passwordState);
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     async function handleSubmit(){
+        setLoading(true);
         const res = await axios.post("http://localhost:3000/api/v1/user/signin", {username,  password})
         const data = res.data;
 
@@ -29,6 +34,8 @@ export default function Signin(){
         }else{
             alert(data.msg);
         }
+
+        setLoading(false);
     }
 
     return(
@@ -43,8 +50,11 @@ export default function Signin(){
                 <Input value={password} onChange={e => setPassword(e.target.value)}className="border-2 p-1 mb-2 mt-1" label="Password"></Input>
                 
                 <Button className="border-black border-2 rounded-xl bg-black text-white mt-2 w-1/2 m-auto hover:bg-teal-400" label="Log-in" onClick={handleSubmit}></Button>
-                <BottomNavigator line="don't have an account?" page="/signup" className="underline hover:text-teal-400 cursor-pointer" label="Sign-up"></BottomNavigator>
+                <BottomNavigator line="Don't have an account?" page="/signup" className="underline hover:text-teal-400 cursor-pointer" label="Sign-up"></BottomNavigator>
             </div>
+            {loading && <div className="absolute w-full h-full flex flex-col items-center justify-center bg-gray-200 opacity-75">
+            <Loader></Loader>
+            <p className="mt-2 font-medium">Processing transaction</p></div>}
         </div>
     )
 }
