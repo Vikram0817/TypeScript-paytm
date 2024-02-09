@@ -1,6 +1,25 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import UserCard from "./UserCard";
+import Loader from "./Loaders";
+
+
+function useDebounce(value: string, delay: number) {
+    
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
 
 export default function FindUser(){
    
@@ -13,6 +32,22 @@ export default function FindUser(){
 
     const [filter, setFilter] = useState("");
     const [users, setUsers] = useState<User[]>([]);
+    const debounceFilter = useDebounce(filter, 200);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [userNotFound, setUserNotFound] = useState(false);
+
+    useEffect(() => {
+        const loaderTimeout = setTimeout(() => {
+            setIsLoading(false); 
+            setUserNotFound(true);
+        }, 20000); 
+
+        return () => {
+            clearTimeout(loaderTimeout);
+        };
+        
+    }, [debounceFilter]);
 
     const headers = {
         'Content-Type': 'application/json',
@@ -20,23 +55,29 @@ export default function FindUser(){
     };
 
     useEffect(() => {
+        setIsLoading(true);
+
         axios.get(`http://localhost:3000/api/v1/user/?filter=${filter}`,{
         headers: headers
         })
         .then(res => res.data)
         .then(data => {
             if(data){
-                setUsers(data)
+                setUsers(data);
             }else {
                 setUsers([]);
             }
+            setIsLoading(false);
+            setUserNotFound(false);
         })
         .catch(err => {
             console.log(`Error fetching data: ${err}`)
             setUsers([]);
+            setUserNotFound(true);
+            setIsLoading(false);
         }
         )
-    }, [filter])
+    }, [debounceFilter])
 
     return(
         <div className="flex flex-col items-center">
@@ -54,7 +95,9 @@ export default function FindUser(){
                     <button type="button" className="text-white absolute end-2.5 bottom-2.5 bg-black hover:bg-teal-500 rounded-3xl text-sm px-4 py-2 dark:bg-teal-500 dark:hover:bg-teal-700 dark:focus:ring-teal-700">Search</button>
                 </div>
             </form>
-            {users.length > 0 ? users.map((user, idx) => <UserCard key={idx} fullName={`${user.firstName} ${user.lastName}`} username={user.username}/>) : <p className="mt-2">No user found...</p>}
+            {!isLoading ? users.map((user, idx) => <UserCard key={idx} fullName={`${user.firstName} ${user.lastName}`} username={user.username}/>)
+            : <div className="mt-4"><Loader /></div> }
+            {userNotFound && <p className="mt-4">No such user exist</p>}
         </div>
     )
 }

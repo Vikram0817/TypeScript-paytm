@@ -39,7 +39,7 @@ account.get("/balance", middleware_1.default, (req, res) => __awaiter(void 0, vo
 account.post("/transfer", middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId: fromUserId, toUsername, amount } = req.body;
-        if (amount >= 0) {
+        if (amount <= 0) {
             return res.json({ msg: "Amount can not be less then or equal to 0" });
         }
         const toUser = yield prisma.user.findFirst({
