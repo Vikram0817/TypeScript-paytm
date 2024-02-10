@@ -55,7 +55,7 @@ export default function Signup(){
             </div>
             {loading && <div className="absolute w-full h-full flex flex-col items-center justify-center bg-gray-200 opacity-75">
             <Loader></Loader>
-            <p className="mt-2 font-medium">Processing transaction</p></div>}
+            </div>}
         </div>
     )
 }
