@@ -1,4 +1,2 @@
 node_modules
 .env
-# Ignore all contents of the dist folder
-# dist/*
