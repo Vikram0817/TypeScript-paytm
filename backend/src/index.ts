@@ -10,5 +10,5 @@ app.use(cors());
 app.use("/api/v1", router);
 
 app.listen(3000, () => {
-    "Listning at port 3000"
+    console.log("Listning at port 3000");
 })
