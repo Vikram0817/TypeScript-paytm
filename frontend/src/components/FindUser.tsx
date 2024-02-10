@@ -39,8 +39,7 @@ export default function FindUser(){
 
     useEffect(() => {
         const loaderTimeout = setTimeout(() => {
-            setIsLoading(false); 
-            setUserNotFound(true);
+            setIsLoading(false);
         }, 20000); 
 
         return () => {
