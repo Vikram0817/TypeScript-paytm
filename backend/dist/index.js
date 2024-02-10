@@ -11,5 +11,5 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use("/api/v1", routes_1.default);
 app.listen(3000, () => {
-    "Listning at port 3000";
+    console.log("Listning at port 3000");
 });
