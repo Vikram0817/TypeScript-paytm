@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node dist/index.js"
-  },
+    "start": "nodemon src/index.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+    },  
+  "pre-commit": [
+      "ts.check",
+      "build",
+      "add-build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,7 +24,9 @@
     "cros": "^1.0.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
