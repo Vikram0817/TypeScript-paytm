@@ -33,5 +33,6 @@ To get started with Paytm-TypeScript, follow these steps:
 
 ## TODO's -
 - Create delete account
+- make signout delete token from localstorage and reset all states
 - Input varifications
 
