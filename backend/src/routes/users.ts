@@ -63,11 +63,7 @@ user.put("/", middleware, async (req, res) => {
     try {
         const { username, firstName, lastName, password } = req.body;
         
-        // Ensure id is properly set in the request body by middleware
         const { userId: id } = req.body;
-        if (!id) {
-            return res.status(400).json({ error: "User id is missing in the request." });
-        }
 
         const result = await prisma.user.update({
             where: {
@@ -81,10 +77,10 @@ user.put("/", middleware, async (req, res) => {
             }
         });
 
-        res.status(200).json(result); // Send the updated user data in response
+        res.status(200).json({result, msg: "User info updated successfully!"}); // Send the updated user data in response
     } catch (error) {
         console.error("Error updating user:", error);
-        res.status(500).json({ error: "An error occurred while updating the user." });
+        res.status(500).json({ msg: "An error occurred while updating the user." });
     }
 });
 
@@ -92,7 +88,7 @@ user.get("/", middleware, async (req, res) => {
     try {
         const { filter } = req.query;
         const filterString = filter as string;
-        const [firstName, lastName] = filterString.split(" ");
+        const [firstName, lastName] = filterString.trim().split(" ");
 
         const result = await prisma.user.findMany({
             where: {

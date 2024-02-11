@@ -3,6 +3,7 @@ import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import Dashboard from './pages/Dashbord'
 import SendMoney from './pages/SendMoney'
+import EditProfile from './pages/EditProfile'
 
 function App() {
   
@@ -14,6 +15,7 @@ function App() {
         <Route path='/signup' element={<Signup />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/send' element={<SendMoney />}></Route>
+        <Route path='/edit' element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   )

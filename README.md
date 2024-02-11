@@ -35,5 +35,3 @@ To get started with Paytm-TypeScript, follow these steps:
 - Create delete account
 - Input varifications
 
-## Glitch - 
-- While searching initail spaces leads to search all users available in DB despite of given filter
