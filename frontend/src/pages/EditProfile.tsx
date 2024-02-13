@@ -27,7 +27,7 @@ export default function EditProfile(){
     async function handleSubmit() {
         setLoading(true);
         try {
-            const res = await axios.put("http://localhost:3000/api/v1/user/", {username, firstName, lastName, password},  {
+            const res = await axios.put("https://type-script-paytm.vercel.app/api/v1/user/", {username, firstName, lastName, password},  {
                 headers: headers
             });
 

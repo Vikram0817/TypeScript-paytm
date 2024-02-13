@@ -13,7 +13,7 @@ export default function MyBalance(){
     };
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/account/balance", {
+        axios.get("https://type-script-paytm.vercel.app/api/v1/account/balance", {
             headers: headers
         })
         .then(res => res.data)

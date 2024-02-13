@@ -56,7 +56,7 @@ export default function FindUser(){
     useEffect(() => {
         setIsLoading(true);
 
-        axios.get(`http://localhost:3000/api/v1/user/?filter=${filter}`,{
+        axios.get(`https://type-script-paytm.vercel.app/api/v1/user/?filter=${filter}`,{
         headers: headers
         })
         .then(res => res.data)

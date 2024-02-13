@@ -22,7 +22,7 @@ export default function Signin(){
 
     async function handleSubmit(){
         setLoading(true);
-        const res = await axios.post("http://localhost:3000/api/v1/user/signin", {username,  password})
+        const res = await axios.post("https://type-script-paytm.vercel.app/api/v1/user/signin", {username,  password})
         const data = res.data;
 
         if(data.token){

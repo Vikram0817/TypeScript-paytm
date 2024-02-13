@@ -25,7 +25,7 @@ export default function SendMoney() {
 
     function handleTransaction(){
         setLoading(true);
-        axios.post("http://localhost:3000/api/v1/account/transfer", body, {
+        axios.post("https://type-script-paytm.vercel.app/api/v1/account/transfer", body, {
             headers: headers
         })        
         .then(res => res.data)
